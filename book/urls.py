@@ -1,7 +1,9 @@
 from django.urls import path, re_path
-from book import views
+from .views import register, bunk, signup, register
 
-urlpatterns= [
-    re_path(r'^$', views.index, name='index'),
-    path('bunk/', views.bunk, name='bunk')
+urlpatterns = [
+    # path('', views.index, name='index'),
+    path('bunk/', bunk, name='bunk'),
+    path('signup/', signup, name='signup'),
+    path('register/', register, name='register'),
 ]
