@@ -11,6 +11,10 @@ from django.contrib.auth.forms import UserCreationForm
 def home(request):
     return render(request, 'home/home.html')
 
+
+def about(request):
+    return render(request, 'home/about.html')
+
 # def signup(request):
 #     if request.method == 'POST':
 #         form = SignUpForm(request.POST)
@@ -24,7 +28,16 @@ def home(request):
 #     else:
 #         form = SignUpForm()
 #     return render(request, 'member/signup.html', {'form': form})
-#
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Redirect to a success page or login page
+            return redirect('login')  # Replace with your desired URL name for login
+    else:
+        form = SignUpForm()
+    return render(request, 'member/signup.html', {'form': form})
 
 def register(request):
     if request.method == 'POST':

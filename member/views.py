@@ -13,3 +13,4 @@ from django.contrib.auth.decorators import login_required
 def bunk(request):
     return render(request, 'member/bunk.html')
 
+
