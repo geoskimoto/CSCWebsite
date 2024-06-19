@@ -1,31 +1,33 @@
 from django import forms
-from django.contrib.auth.forms import UsernameField
-from .models import Member
+from .models import Reservation, Bunk
+from django.contrib.auth import get_user_model
 
 
-class SignUpForm(forms.ModelForm):
-    email = forms.EmailField(required=True)
-    username = forms.CharField(max_length=100)
-    status = forms.CharField(max_length=25)
-    emergency_contact = forms.CharField(max_length=100)
-    emergency_contact_phone = forms.CharField(max_length=15)
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
-
+class BunkReservationForm(forms.ModelForm):
     class Meta:
-        model = Member
-        fields = ('email', 'username', 'status', 'emergency_contact', 'emergency_contact_phone', 'password1', 'password2')
-        field_classes = {'username': UsernameField}
+        model = Reservation
+        fields = ['bunk', 'start_date', 'end_date']
+        labels = {
+            'bunk': 'Select Bunk',
+            'start_date': 'Start Date',
+            'end_date': 'End Date',
+        }
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+        }
 
-    def clean_email(self):
-        email = self.cleaned_data['email']
-        if Member.objects.filter(email=email).exists():
-            raise forms.ValidationError('Email is already registered.')
-        return email
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['bunk'].queryset = Bunk.objects.filter(assigned_to=self.current_user)
 
     def save(self, commit=True):
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password1'])
+        instance = super().save(commit=False)
+        instance.member = self.current_user
         if commit:
-            user.save()
-        return user
+            instance.save()
+        return instance
+
+    @property
+    def current_user(self):
+        return get_user_model().objects.get(pk=self.request.user.pk)

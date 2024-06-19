@@ -7,7 +7,8 @@ from django.apps import AppConfig
 
 
 class MemberConfig(AppConfig):
-    name = 'member'
+    name = 'member'  # This is actually pretty crucial.  Make sure it's the same name as the directory.  Then you can import
+    # files or models from this app into others by "from member.models import Members".
 
     # def ready(self):
     #     import signals
