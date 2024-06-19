@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('auth', '0012_alter_user_first_name_max_length'),
-        ('book', '0004_member_username'),
+        ('member', '0004_member_username'),
     ]
 
     operations = [
@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
                 ('amount', models.DecimalField(decimal_places=2, max_digits=10)),
                 ('payment_date', models.DateTimeField(auto_now_add=True)),
                 ('payment_method', models.CharField(choices=[('CC', 'Credit Card'), ('PP', 'PayPal')], max_length=2)),
-                ('locker', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='payments', to='book.locker')),
+                ('locker', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='payments', to='member.locker')),
             ],
         ),
         migrations.CreateModel(
@@ -70,7 +70,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bunk',
             name='assigned_to',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='bunks', to='book.member'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='bunks', to='member.member'),
         ),
         migrations.AddField(
             model_name='bunk',
@@ -180,31 +180,31 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='reservation',
             name='bunk',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reservations', to='book.bunk'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reservations', to='member.bunk'),
         ),
         migrations.AddField(
             model_name='reservation',
             name='member',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reservations', to='book.member'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reservations', to='member.member'),
         ),
         migrations.AddField(
             model_name='payment',
             name='member',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='payments', to='book.member'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='payments', to='member.member'),
         ),
         migrations.AddField(
             model_name='payment',
             name='reservation',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='payments', to='book.reservation'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='payments', to='member.reservation'),
         ),
         migrations.AddField(
             model_name='locker',
             name='assigned_to',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='lockers', to='book.member'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='lockers', to='member.member'),
         ),
         migrations.AddField(
             model_name='familymember',
             name='member',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='family_members', to='book.member'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='family_members', to='member.member'),
         ),
     ]
