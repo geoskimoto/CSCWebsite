@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Bunk, Member
+from member.models import Bunk, Member
 # Register your models here.
 
-admin.site.register(Bunk)
+# admin.site.register(Bunk)
 # admin.site.register(Room)
-admin.site.register(Member)
+# admin.site.register(Member)
 
 
 # @admin.register(Member)

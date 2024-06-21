@@ -1,5 +1,5 @@
 from django import forms
-from .models import Reservation, Bunk
+from member.models import Reservation, Bunk
 from django.contrib.auth import get_user_model
 
 

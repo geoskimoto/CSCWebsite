@@ -15,6 +15,10 @@ from .forms import BunkReservationForm
 #     return render(request, 'member/bunk.html')
 
 @login_required
+def member_base(request):
+    return render(request, 'member_base.html')
+
+@login_required
 def bunk_reservation(request):
     if request.method == 'POST':
         form = BunkReservationForm(request.POST)
@@ -23,9 +27,10 @@ def bunk_reservation(request):
             # Save reservation, etc.
             return redirect('reservation_success')  # Redirect to a success page
     else:
+        #NEED TO DO SOMETHING HERE...REDIRECT TO LOGIN SCREEN
         form = BunkReservationForm()
-
+        # return redirect("need to login")
     context = {
         'form': form,
     }
-    return render(request, 'bunk_reservation.html', context)
+    return render(request, 'bunk_reservation.html')

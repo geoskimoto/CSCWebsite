@@ -1,32 +1,15 @@
 from django import forms
-from django.contrib.auth.forms import UsernameField
-from member.models import Member
+from .models import MembershipApplication
 
-
-class SignUpForm(forms.ModelForm):
-    email = forms.EmailField(required=True)
-    username = forms.CharField(max_length=100)
-    status = forms.CharField(max_length=25)
-    emergency_contact = forms.CharField(max_length=100)
-    emergency_contact_phone = forms.CharField(max_length=15)
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
-
+class MembershipApplicationForm(forms.ModelForm):
     class Meta:
-        model = Member
-        fields = ('email', 'username', 'status', 'emergency_contact', 'emergency_contact_phone', 'password1', 'password2')
-        field_classes = {'username': UsernameField}
-
-    def clean_email(self):
-        email = self.cleaned_data['email']
-        if Member.objects.filter(email=email).exists():
-            raise forms.ValidationError('Email is already registered.')
-        return email
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password1'])
-        if commit:
-            user.save()
-        return user
-
+        model = MembershipApplication
+        fields = [
+            'first_name', 'last_name', 'email', 'gender', 'date_of_birth', 'occupation',
+            'skills', 'address_line_1', 'address_line_2', 'city', 'state', 'zip_code',
+            'country', 'home_phone', 'work_phone', 'mobile_phone', 'fax', 'website_url',
+            'joining_comments'
+        ]
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
+        }
