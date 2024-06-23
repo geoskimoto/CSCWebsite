@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 # from member import views
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,6 +27,8 @@ urlpatterns = [
     # path('signup/', views.signup, name='signup'),
     # path('register/', views.register, name='register'),
     path('member/', include('member.urls'), name='member'),
-    path('', include('home.urls'), name='home')
+    path('', include('home.urls'), name='home'),
     # path('bunks/', include('member.urls'))
-]
+    path('', include('HomePage.urls')),
+    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
