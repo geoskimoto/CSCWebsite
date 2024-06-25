@@ -11,7 +11,7 @@ class Guest(models.Model):
     FirstName = models.CharField(max_length=100)
     LastName = models.CharField(max_length=100)
     Email = models.EmailField(max_length=100)
-    CNIC = models.CharField(max_length=100)
+    # CNIC = models.CharField(max_length=100)
     Password = models.CharField(max_length=100)
     Address = models.CharField(max_length=100)
     ConfirmPassword = models.CharField(max_length=100)

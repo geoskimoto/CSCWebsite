@@ -18,7 +18,7 @@ def home(request):
 def about(request):
     return render(request, 'home/about.html')
 
-def login(request):
+def login2(request):
     return render(request, 'member/login.html')
 
 

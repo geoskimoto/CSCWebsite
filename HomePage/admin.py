@@ -6,7 +6,7 @@ from .models import *  # Import your Guest model here
 
 
 class GuestInfo(admin.ModelAdmin):
-    list_display=('GuestID','FirstName', 'LastName','Email','CNIC')
+    list_display=('GuestID','FirstName', 'LastName','Email')
 
 class RoomTypeInfo(admin.ModelAdmin):
     list_display=('room_type','room_desc', 'roomtype_price')

@@ -21,6 +21,7 @@
             <div class="room">
                 <a href="{% url 'detail' room_type.room_type %}" name="RoomType">
                     <img src="{{ room_type.room_image }}" alt="{{ room_type.room_type }}">
+<!--                    <img src={% static "my_app/example.jpg" %}" alt="My image">-->
                     <!-- Use room_type.room_image directly as the image URL -->
                     <h2>{{ room_type.room_type }}</h2>
                     <p>{{ room_type.room_desc }}</p>

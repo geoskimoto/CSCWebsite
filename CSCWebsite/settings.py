@@ -17,7 +17,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 # TEMPLATE_DIR_MEMBER = os.path.join(BASE_DIR, 'templates/member')
 # TEMPLATE_DIR_HOME = os.path.join(BASE_DIR, 'templates/home')
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -30,6 +33,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
 
 # Application definition
 
@@ -40,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'crispy_forms',
     'member',
     'home',
     'HomePage'

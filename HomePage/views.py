@@ -23,7 +23,7 @@ def register(request):
         last_name = request.POST.get('LastName')
         email = request.POST.get('Email')
 
-        cnic = request.POST.get('CNIC')
+        # cnic = request.POST.get('CNIC')
         password = request.POST.get('Password')
         address = request.POST.get('Address')
         confirm_password = request.POST.get('ConfirmPassword')
