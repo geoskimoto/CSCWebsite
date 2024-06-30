@@ -1,5 +1,5 @@
 from django.contrib import admin
-from member.models import Bunk, Member
+# from member.models import Bunk, Member
 # Register your models here.
 
 # admin.site.register(Bunk)

@@ -29,6 +29,6 @@ urlpatterns = [
     path('member/', include('member.urls'), name='member'),
     path('', include('home.urls'), name='home'),
     # path('bunks/', include('member.urls'))
-    path('', include('HomePage.urls')),
+    # path('', include('HomePage.urls')),
     ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
