@@ -2,6 +2,7 @@ from django.db import models
 # from django.db.models.signals import post_save, pre_delete
 # from django.dispatch import receiver
 from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.models import User
 
 class Locker(models.Model):
     number = models.CharField(max_length=10, unique=True)
@@ -17,8 +18,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 
 class Member(AbstractUser):
-    name = models.CharField(max_length=100)
-    username = models.CharField(max_length=100)
+    # name = models.CharField(max_length=100)
+    # username = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=15, null=True, blank=True)
     status = models.CharField(max_length=20)
     date_joined = models.DateTimeField(auto_now_add=True)
@@ -29,6 +30,18 @@ class Member(AbstractUser):
     is_employee = models.BooleanField(default=False)
     is_committee_member = models.BooleanField(default=False)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    #---------------------
+    # Linking Member to auth.User
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE, null=True)
+    # Django handles authentication in the AbstractUser class which Member inherits. It creates a User that's separate
+    # from any table (i.e. Member), so you have to link them with OneToOne relationship.
+    # NOTE! : setting null=True.  Member must have a User and User must have a Member but I think this will just set
+    # user to null until one is created with the save method????  Dunno this seems jenky.
+
+    #Maybe try this?
+    # https://stackoverflow.com/questions/39527289/associating-users-with-models-django
+    # --------------------
 
     groups = models.ManyToManyField(
         Group,
@@ -46,11 +59,26 @@ class Member(AbstractUser):
     )
 
     class Meta:
+        # model = User #I think you can use the Meta class to combine User and Member
+        #go to 47min in this video https://www.youtube.com/watch?v=WuyKxdLcw3w
+        #Think the above video shows how to put Member info into the User table.
+        # Because the User table is a bit obscure/abstract think you still would rather
+        # just link it to a Member table.  Just need to figure out why there are two
+        # passwords with both tables and if they are actually linked.
         verbose_name = 'member'
         verbose_name_plural = 'members'
 
+    # Every Member instance needs a corresponding auth.User instance from the moment it's created, so  create a default
+    # auth.User instance if one doesn't exist.
+    def save(self, *args, **kwargs):
+        if not self.user_id:
+            # Create a default auth.User instance if not already assigned
+            self.user = User.objects.create(username=self.username)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.username
+
 
     def update_balance(self):
         total_paid = self.payments.aggregate(total=models.Sum('amount'))['total'] or 0

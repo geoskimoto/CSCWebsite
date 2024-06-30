@@ -18,10 +18,6 @@ def home(request):
 def about(request):
     return render(request, 'home/about.html')
 
-def login2(request):
-    return render(request, 'member/login.html')
-
-
 def membership_application(request):
     if request.method == 'POST':
         form = MembershipApplicationForm(request.POST)

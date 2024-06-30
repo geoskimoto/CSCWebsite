@@ -19,21 +19,27 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 # TEMPLATE_DIR_HOME = os.path.join(BASE_DIR, 'templates/home')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    '/var/www/static/',
+    # '/var/www/static/',
 ]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-6%mdb0^vyw_i5ej-(88#2+zfeqf_phc7bq_7bf8mt8)!28ip5h'
-LOGIN_REDIRECT_URL = '/login/'
-LOGOUT_REDIRECT_URL = 'index'
+
+# this is where you go after you login
+LOGIN_REDIRECT_URL = 'member/dashboard'
+#Have this logIN, not logout.
+LOGOUT_REDIRECT_URL = '/login'
+
+LOGIN_URL = 'member/login/'  #
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# CRISPY_TEMPLATE_PACK = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 
 # Application definition
@@ -45,10 +51,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'crispy_forms',
+    'crispy_forms',
+    'crispy_bootstrap5',
     'member',
     'home',
-    'HomePage'
+    # 'HomePage'
 ]
 
 MIDDLEWARE = [
@@ -92,7 +99,9 @@ DATABASES = {
     }
 }
 
-
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Default authentication backend
+]
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
