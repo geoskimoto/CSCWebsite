@@ -99,6 +99,7 @@ DATABASES = {
     }
 }
 
+# AUTH_USER_MODEL = 'member.Member'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default authentication backend
 ]

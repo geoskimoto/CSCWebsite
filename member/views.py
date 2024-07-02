@@ -3,7 +3,22 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-from .forms import EmailAuthenticationForm
+from .forms import EmailAuthenticationForm, MembershipRegistrationForm
+
+from django.conf import settings
+User = settings.AUTH_USER_MODEL
+
+def membership_registration(request):
+    if request.method == 'POST':
+        form = MembershipRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('success_url')  # Redirect to a success page
+    else:
+        form = MembershipRegistrationForm()
+    return render(request, 'member/membership_registration.html', {'form': form})
+
+
 
 
 @login_required

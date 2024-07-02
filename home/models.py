@@ -24,7 +24,6 @@ class MembershipApplication(models.Model):
     home_phone = models.CharField(max_length=30, blank=True)
     work_phone = models.CharField(max_length=30, blank=True)
     mobile_phone = models.CharField(max_length=30, blank=True)
-    fax = models.CharField(max_length=30, blank=True)
     website_url = models.URLField(max_length=100, blank=True)
     joining_comments = models.TextField(max_length=1000, blank=True)
 

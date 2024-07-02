@@ -2,7 +2,7 @@ from django.urls import path, re_path
 # from .views import home, about, register, signup_view, login
 from django.shortcuts import render, redirect
 from .forms import MembershipApplicationForm
-
+#
 # from django.contrib.auth.forms import UserCreationForm
 # from django.contrib.auth import login, authenticate
 # from member.forms import SignUpForm

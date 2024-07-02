@@ -6,7 +6,7 @@ urlpatterns = [
     path('about/', about, name='about'),
     # path('signup/', signup_view, name='signup'),
     # path('register/', register, name='register'),
-    path('membership-application/', membership_application, name='membership_application'),
+    path('application/', membership_application, name='membership_application'),
 ]
 
 

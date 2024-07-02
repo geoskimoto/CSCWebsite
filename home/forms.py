@@ -14,7 +14,7 @@ class MembershipApplicationForm(forms.ModelForm):
         fields = [
             'first_name', 'last_name', 'email', 'gender', 'date_of_birth', 'occupation',
             'skills', 'address_line_1', 'address_line_2', 'city', 'state', 'zip_code',
-            'country', 'home_phone', 'work_phone', 'mobile_phone', 'fax', 'website_url',
+            'country', 'home_phone', 'work_phone', 'mobile_phone', 'website_url',
             'joining_comments'
         ]
         widgets = {
