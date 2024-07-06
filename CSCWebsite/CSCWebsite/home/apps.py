@@ -6,6 +6,6 @@ from django.apps import AppConfig
 #     name = 'member'
 
 
-class HomeConfig(AppConfig):
-    name = 'home'
+# class HomeConfig(AppConfig):
+#     name = 'home'
 
