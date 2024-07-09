@@ -98,6 +98,29 @@ def create_user_for_member(sender, instance, created, **kwargs):
         instance.user = user
         instance.save()
 
+
+class Invoice(models.Model):
+    member = models.ForeignKey(Member, related_name='member_invoices', on_delete=models.CASCADE)
+    amount_due = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.CharField(max_length=255)
+    due_date = models.DateField()
+
+    def __str__(self):
+        return f'Invoice {self.id} for {self.member}'
+
+class Payment(models.Model):
+    member = models.ForeignKey(Member, related_name='member_payments', on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_date = models.DateField()
+    description = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return f'Payment {self.id} for {self.member}'
+
+
+
+#KEEP THIS!! There's some good reference notes from when you were trying to inherit user instead of linking user and
+#member using a OneToOneField.
 # class Member(models.Model):
 #     first_name = models.CharField(max_length=50)
 #     last_name = models.CharField(max_length=50)

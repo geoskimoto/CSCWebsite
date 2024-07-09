@@ -1,9 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from .forms import BunkReservationForm
+# from .forms import BunkReservationForm
 from django.db import transaction, IntegrityError
 from django.shortcuts import render, redirect
 from django.utils import timezone
-from .models import Room, Booking
+from .models import Bunk, Booking
 from .forms import BookingForm
 from django.contrib import messages
 
@@ -11,7 +12,7 @@ from django.contrib import messages
 #This function includes logic to handle concurrency issues mainting ACID db principles when booking bunks (i.e. how to
 # handle issues when two members are logged in at the same time trying to book the same bunk.)
 @login_required
-def book_room(request):
+def book_bunk(request):
     if request.method == 'POST':
         form = BookingForm(request.POST)
         if form.is_valid():
@@ -38,7 +39,7 @@ def book_room(request):
     else:
         form = BookingForm()
 
-    return render(request, 'booking/book_room.html', {'form': form})
+    return render(request, 'booking/book_bunk.html', {'form': form})
 
 
 

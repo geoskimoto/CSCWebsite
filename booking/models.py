@@ -37,14 +37,14 @@ class Booking(models.Model):
 
 
 class Billing(models.Model):
-    member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='invoices')
-    booking = models.OneToOneField(Booking, on_delete=models.CASCADE)
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    member = models.ForeignKey(Member, related_name='billing_invoices', on_delete=models.CASCADE)
+    amount_due = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.CharField(max_length=255)
+    due_date = models.DateField()
 
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.total_amount = self.booking.total_price
-        super().save(*args, **kwargs)
+    def __str__(self):
+        return f'Billing {self.id} for {self.member}'
+
 
 class Payment(models.Model):
     PAYMENT_METHODS = [
@@ -76,3 +76,4 @@ class Invoice(models.Model):
             self.amount_due = self.booking.total_price
         super().save(*args, **kwargs)
         self.member.update_balance()
+
