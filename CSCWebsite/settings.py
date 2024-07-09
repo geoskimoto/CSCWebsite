@@ -28,11 +28,11 @@ STATICFILES_DIRS = [
 SECRET_KEY = 'django-insecure-6%mdb0^vyw_i5ej-(88#2+zfeqf_phc7bq_7bf8mt8)!28ip5h'
 
 # this is where you go after you login
-LOGIN_REDIRECT_URL = 'member/dashboard'
+LOGIN_REDIRECT_URL = 'dashboard'
 #Have this logIN, not logout.
-LOGOUT_REDIRECT_URL = '/login'
+LOGOUT_REDIRECT_URL = 'login'
 
-LOGIN_URL = 'member/login/'  #
+LOGIN_URL = 'login'  #
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -66,6 +66,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    #My middleware components:
+    'member.middleware.RedirectIfAuthenticatedMiddleware',
+
 ]
 
 ROOT_URLCONF = 'CSCWebsite.urls'

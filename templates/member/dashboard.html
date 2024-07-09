@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>This is the member dashboard title</title>
-</head>
+{% extends "base.html" %}
+
+{% block title %}Member Dashboard{% endblock %}
+
+{% block content %}
+    <title>Welcome to your dashboard</title>
 <body>
     <h1>This is the member dashboard body</h1>
     <form action="{% url 'logout' %}" method="post">
@@ -11,4 +11,4 @@
         <button type="submit">Logout</button>
     </form>
 </body>
-</html>
+{% endblock %}

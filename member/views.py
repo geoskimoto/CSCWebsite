@@ -10,6 +10,9 @@ User = settings.AUTH_USER_MODEL
 
 from django.shortcuts import render, redirect
 from .forms import UserCreationWithEmailForm, MembershipRegistrationForm
+from django.contrib.auth.views import LoginView
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 
 
 def membership_registration(request):
@@ -56,8 +59,15 @@ def membership_application(request):
 
 @login_required
 def dashboard(request):
-    # This view requires the user to be logged in
     return render(request, 'member/dashboard.html')
+
+
+
+class CustomLoginView(LoginView):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect(reverse_lazy('dashboard'))  # Ensure this uses reverse_lazy to get the correct absolute URL
+        return super().dispatch(request, *args, **kwargs)
 
 
 def member_login_view(request):
@@ -66,7 +76,7 @@ def member_login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('member/dashboard')  # Redirect to dashboard upon successful login
+            return redirect('dashboard')  # Redirect to dashboard upon successful login
         else:
             messages.error(request, 'Invalid email or password.')
     else:
@@ -77,7 +87,7 @@ def member_login_view(request):
 def member_logout_view(request):
     logout(request)
     # Redirect to the login page or any other page after logout
-    return redirect('member/login')
+    return redirect('login')
 
 # def member_login_view(request):
 #     if request.method == 'POST':
