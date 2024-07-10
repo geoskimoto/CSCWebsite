@@ -15,6 +15,8 @@ from django.contrib.auth.forms import UserCreationForm
 def home(request):
     return render(request, 'home/home.html')
 
+def home2(request):
+    return render(request, 'home/home2.html')
 def about(request):
     return render(request, 'home/about.html')
 

@@ -8,9 +8,12 @@ class Bunk(models.Model):
     bunk_number = models.CharField(max_length=10, unique=True)
     assigned_to = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, blank=True, related_name='bunks')
     price_per_night = models.DecimalField(max_digits=10, decimal_places=2, default=20.00)
-    area = models.CharField(max_length=50)  # e.g., North Wing, South Wing
+    area = models.CharField(max_length=50)
+    sub_area = models.CharField(max_length=50, null=True)
 
-
+    #This is important, or else you'll just have "Bunk Object (1)" as the name for each bunk in the forms and admin interface.
+    def __str__(self):
+        return self.bunk_number
 class Booking(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     bunk = models.ForeignKey(Bunk, on_delete=models.CASCADE)
