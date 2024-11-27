@@ -1,0 +1,1 @@
+This "home" folder/app handles the views and url mappings for public facing pages of the website.

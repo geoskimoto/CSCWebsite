@@ -1,0 +1,3 @@
+This "member" folder/app handles models, forms, views, and url mappings for member only pages.
+Handles new member registration, account creation, and email validation.
+Contains the redirect landing page once a member successfully logs in.

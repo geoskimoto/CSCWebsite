@@ -3,5 +3,5 @@ from .views import book_bunk
 
 
 urlpatterns = [
-    path('book_bunk/', book_bunk, name="book_bunk")
+    path('/booking', book_bunk, name="book_bunk")
     ]
