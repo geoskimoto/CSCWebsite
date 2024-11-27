@@ -20,9 +20,12 @@ from django.core.validators import EmailValidator
 # validate_email = EmailValidator(allowlist=EMAIL_LIST)
 
 
-from django import forms
+from django.shortcuts import render, HttpResponse
 from .models import Bunk, Booking
+# from utils.booking_funcs import check_availability, get_user_bookings, get_all_bunks
 
+class AvailabilityForm(forms.ModelForm):
+    pass
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
@@ -31,7 +34,6 @@ class BookingForm(forms.ModelForm):
             'check_in': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
             'check_out': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         }
-
     def clean(self):
         cleaned_data = super().clean()
         check_in = cleaned_data.get('check_in')

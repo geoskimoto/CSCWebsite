@@ -4,6 +4,19 @@ from django.conf import settings
 #going to say unresolved reference because booking app above member app, so IDE think it doesn't exist yet.  Django
 #ORM will handle it though.
 from member.models import Member
+
+# From https://www.youtube.com/watch?v=-9dhCQ7FdD0&list=PL_6Ho1hjJirn8WbY4xfVUAlcn51E4cSbY
+# class Room(models.Model):
+#     ROOM_OPTIONS = (
+#         ('Bunk'),
+#         ('Room A'),
+#         ('Room B')
+#     )
+#     number = models.IntegerField()
+#     option = models.CharField(max_length=10, choices=ROOM_OPTIONS)
+
+# ------------------
+
 class Bunk(models.Model):
     bunk_number = models.CharField(max_length=10, unique=True)
     assigned_to = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, blank=True, related_name='bunks')
@@ -15,6 +28,7 @@ class Bunk(models.Model):
     def __str__(self):
         return self.bunk_number
 class Booking(models.Model):
+    booking_id = models.CharField(max_length=50, primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     bunk = models.ForeignKey(Bunk, on_delete=models.CASCADE)
     check_in = models.DateTimeField()
@@ -25,18 +39,18 @@ class Booking(models.Model):
     class Meta:
         unique_together = ('bunk', 'check_in', 'check_out')
 
-    def calculate_total(self):
-        room_price_per_night = self.bunk #.room_type.roomtype_price
-        check_in = self.check_in
-        check_out = self.check_out
-        # Calculate duration of stay in nights
-        duration = (check_out - check_in).days
-        # Calculate total room price based on duration
-        total_price = room_price_per_night * duration
-        # services_price = sum(service.service_price for service in self.services.all())
-        total_amount = total_price #+ services_price
-
-        return total_amount
+    # def calculate_total(self):
+    #     room_price_per_night = self.bunk #.room_type.roomtype_price
+    #     check_in = self.check_in
+    #     check_out = self.check_out
+    #     # Calculate duration of stay in nights
+    #     duration = (check_out - check_in).days
+    #     # Calculate total room price based on duration
+    #     total_price = room_price_per_night * duration
+    #     # services_price = sum(service.service_price for service in self.services.all())
+    #     total_amount = total_price #+ services_price
+    #
+    #     return total_amount
 
 
 class Billing(models.Model):
