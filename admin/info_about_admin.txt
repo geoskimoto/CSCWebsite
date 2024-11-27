@@ -1,0 +1,3 @@
+This "admin" app/folder is currently empty and unregistered in settings.py, but will eventually handle pages,
+views, and url mappings for which admins can use once logged in.  Plan is to make an "admin dashboard" in which
+information on membership, bookings, financials, etc. will be handled and displayed here.
