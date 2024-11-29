@@ -24,7 +24,8 @@ class Bunk(models.Model):
     area = models.CharField(max_length=50)
     sub_area = models.CharField(max_length=50, null=True)
 
-    #This is important, or else you'll just have "Bunk Object (1)" as the name for each bunk in the forms and admin interface.
+    # Need to have a string representation of the object or else you'll just have "Bunk Object (1)" as the
+    # name for each bunk in the forms and admin interface.
     def __str__(self):
         return self.bunk_number
 class Booking(models.Model):
