@@ -1,12 +1,7 @@
 from django.urls import path, re_path
 # from .views import home, about, register, signup_view, login
 from django.shortcuts import render, redirect
-<<<<<<< HEAD
-from .forms import MembershipApplicationForm
-=======
 # from .forms import MembershipApplicationForm
->>>>>>> origin/laptop
-#
 # from django.contrib.auth.forms import UserCreationForm
 # from django.contrib.auth import login, authenticate
 # from member.forms import SignUpForm
@@ -18,23 +13,11 @@ from django.contrib.auth.forms import UserCreationForm
 
 def home(request):
     return render(request, 'home/home.html')
-
 def home2(request):
     return render(request, 'home/home2.html')
 def about(request):
     return render(request, 'home/about.html')
 
-<<<<<<< HEAD
-def membership_application(request):
-    if request.method == 'POST':
-        form = MembershipApplicationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('success_url')  # Redirect to a success page
-    else:
-        form = MembershipApplicationForm()
-    return render(request, 'home/membership_application.html', {'form': form})
-=======
 # def membership_application(request):
 #     if request.method == 'POST':
 #         form = MembershipApplicationForm(request.POST)
@@ -44,7 +27,6 @@ def membership_application(request):
 #     else:
 #         form = MembershipApplicationForm()
 #     return render(request, 'home/membership_application.html', {'form': form})
->>>>>>> origin/laptop
 
 
 # def signup(request):

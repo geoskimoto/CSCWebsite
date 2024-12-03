@@ -1,2 +1,0 @@
-This folder contains the overall website/app settings, urls, and server configuration.
-Register each sub-app/directory in the settings.py file.

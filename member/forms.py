@@ -1,9 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import get_user_model, authenticate
-<<<<<<< HEAD
-=======
-
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
@@ -19,7 +16,6 @@ from django.core.validators import EmailValidator
 EMAIL_LIST = ['nick.steele.nv@gmail.com', 'geoskimoto@yahoo.com']
 
 validate_email = EmailValidator(allowlist=EMAIL_LIST)
->>>>>>> origin/laptop
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -39,16 +35,6 @@ validate_email = EmailValidator(allowlist=EMAIL_LIST)
 class MembershipRegistrationForm(UserCreationForm):
     email = forms.EmailField(label=_("Email"), validators=[validate_email])
 
-<<<<<<< HEAD
-    class Meta:
-        model = Member
-        fields = [
-            'email', 'password1', 'password2',
-            'phone_number',
-            'emergency_contact', 'emergency_contact_phone',
-            'is_family_member', 'is_employee', 'is_committee_member'
-        ]
-=======
 class MembershipApplicationForm(forms.ModelForm):
     # def __init__(self, *args, **kwargs):
     #     super(MembershipApplicationForm, self).__init__(*args, **kwargs)
@@ -174,7 +160,7 @@ class MembershipRegistrationForm(UserCreationForm):
     #     if commit:
     #         member.save()
     #     return member
->>>>>>> origin/laptop
+
 
 User = get_user_model()
 class EmailAuthenticationForm(AuthenticationForm):
