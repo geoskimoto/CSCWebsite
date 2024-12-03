@@ -31,8 +31,8 @@ class BookingForm(forms.ModelForm):
         model = Booking
         fields = ['bunk', 'check_in', 'check_out']
         widgets = {
-            'check_in': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
-            'check_out': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            'check_in': forms.DateInput(attrs={'type': 'date'}),
+            'check_out': forms.DateInput(attrs={'type': 'date'}),
         }
     def clean(self):
         cleaned_data = super().clean()

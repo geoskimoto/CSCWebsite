@@ -14,6 +14,11 @@ import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
+# Need to add a check to see if there are bunk ids in the bunk table and
+# if not run the "bunk_id_populater.py" script.  If the db is empty,
+# current method is to just run "python book_id_populater.py"
+
+
 #This function includes logic to handle concurrency issues mainting ACID db principles when booking bunks (i.e. how to
 # handle issues when two members are logged in at the same time trying to book the same bunk.)
 @login_required
@@ -26,14 +31,14 @@ def book_bunk(request):
             check_out = form.cleaned_data['check_out']
 
             # Store booking details in session
-            request.session['bunk'] = bunk.id
+            request.session['bunk'] = bunk.bunk_id
             request.session['check_in'] = check_in.isoformat()
             request.session['check_out'] = check_out.isoformat()
 
             try:
                 with transaction.atomic():
-                    if Booking.objects.filter(bunk=bunk.bunk_number, check_in__lt=check_out, check_out__gt=check_in).exists():
-                        raise IntegrityError("This room is already booked for the selected time slot.")
+                    if Booking.objects.filter(bunk=bunk.bunk_id, check_in__lt=check_out, check_out__gt=check_in).exists():
+                        raise IntegrityError("This bunk is already booked for the selected time slot.")
 
                     booking = Booking.objects.create(
                         user=request.user,
@@ -41,7 +46,7 @@ def book_bunk(request):
                         check_in=check_in,
                         check_out=check_out
                     )
-                    messages.success(request, f'Bunk {bunk.bunk_number} successfully booked.')
+                    messages.success(request, f'Bunk {bunk.bunk_id} successfully booked.')
                     return redirect('dashboard')
             except IntegrityError:
                 messages.error(request,
@@ -101,7 +106,7 @@ def confirm_booking(request):
                     check_in=check_in,
                     check_out=check_out
                 )
-                messages.success(request, f'Bunk {bunk.bunk_number} successfully booked.')
+                messages.success(request, f'Bunk {bunk.id} successfully booked.')
                 return redirect('dashboard')
         except IntegrityError:
             messages.error(request, 'The selected bunk is already booked for the given time period. Please choose a different time or bunk.')
@@ -155,8 +160,8 @@ def initiate_payment(request, booking_id):
     intent = stripe.PaymentIntent.create(
         amount=int(booking_total * 100), # amount in cents
         currency='usd',
-        description=f'Booking payment for {booking.id}',
-        metadata={'booking_id':booking.id}
+        description=f'Booking payment for {booking.bunk_id}',
+        metadata={'booking_id':booking.bunk_id}
     )
     return render(request,
                   'payment_form.html',

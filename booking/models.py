@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+import uuid
 #going to say unresolved reference because booking app above member app, so IDE think it doesn't exist yet.  Django
 #ORM will handle it though.
 from member.models import Member
@@ -18,7 +18,13 @@ from member.models import Member
 # ------------------
 
 class Bunk(models.Model):
-    bunk_number = models.CharField(max_length=10, unique=True)
+    bunk_id = models.CharField(
+        max_length=10,
+        unique=True,
+        primary_key=True,)
+        # default=uuid.uuid4), # Automatically generate unique IDs if they don't exist.  bunk_id should never be null,
+        # however since bunk_id is a primary key, need to define a unique default character ID just in case.
+        # Using uuid library to create a unique id that is a string/characters opposed to integers.
     assigned_to = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, blank=True, related_name='bunks')
     price_per_night = models.DecimalField(max_digits=10, decimal_places=2, default=20.00)
     area = models.CharField(max_length=50)
@@ -27,13 +33,19 @@ class Bunk(models.Model):
     # Need to have a string representation of the object or else you'll just have "Bunk Object (1)" as the
     # name for each bunk in the forms and admin interface.
     def __str__(self):
-        return self.bunk_number
+        return self.bunk_id
 class Booking(models.Model):
-    booking_id = models.CharField(max_length=50, primary_key=True)
+    booking_id = models.CharField(
+        max_length=50,
+        unique=True,
+        primary_key=True,)
+        # default=uuid.uuid4) # Automatically generate unique IDs.  They won't ever be null, however
+        # since booking_id is a primary key, need to define a unique default character ID just in case.
+        # Using uuid library to create a unique id that is a string/characters opposed to integers.
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     bunk = models.ForeignKey(Bunk, on_delete=models.CASCADE)
-    check_in = models.DateTimeField()
-    check_out = models.DateTimeField()
+    check_in = models.DateField()
+    check_out = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
 

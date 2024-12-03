@@ -37,24 +37,24 @@ BED_PRICE = 75.00
 
 
 @transaction.atomic
-def insert_bunks():
+def insert_bunks_into_db():
     for area, bunk_types in Bunks.items():
-        for sub_area, bunk_numbers in bunk_types.items():
-            for bunk_number in bunk_numbers:
-                if bunk_number[-1] == 'A':  # Check if it's a bed
+        for sub_area, bunk_ids in bunk_types.items():
+            for bunk_id in bunk_ids:
+                if bunk_id[-1] == 'A':  # Check if it's a bed
                     price = BED_PRICE
                 else:
                     price = BUNK_PRICE
 
                 # Create Bunk object
                 bunk = Bunk.objects.create(
-                    bunk_number=bunk_number,
+                    bunk_id=bunk_id,
                     area=area,
                     sub_area=sub_area,
                     price_per_night=price
                 )
-                print(f"Created Bunk {bunk.bunk_number} in {bunk.area}/{bunk.sub_area} with price ${price}")
+                print(f"Created Bunk {bunk.bunk_id} in {bunk.area}/{bunk.sub_area} with price ${price}")
 
 
 if __name__ == "__main__":
-    insert_bunks()
+    insert_bunks_into_db()

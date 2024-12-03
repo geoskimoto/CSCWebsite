@@ -1,2 +1,0 @@
-Pulled this "HomePage" directory/app from a third party project.  Has no usage except for using it as
-a reference and an example.
