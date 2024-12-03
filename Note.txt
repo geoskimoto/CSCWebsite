@@ -1,0 +1,11 @@
+After changing anything to the models.py files, need to migrate the changes to the db:
+
+python manage.py makemigrations
+python manage.py migrate
+
+Sometimes db gets all f'd up.  Need to remove sqlite.db and many times the migration
+files in each migration folder in booking and member sub apps.  Make sure not to
+remove __init__.py files or else the models will not be recreated.
+
+If you delete entire db, will have to create superuser/members again:
+python manage.py createsuperuser --username admin --email admin@example.com

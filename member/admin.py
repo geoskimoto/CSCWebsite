@@ -1,8 +1,13 @@
 from django.contrib import admin
+<<<<<<< HEAD
+=======
+from .models import Member, MemberApplication, FamilyMember, Locker #, Reservation, Payment, Bunk
+>>>>>>> origin/laptop
 from .models import Member, FamilyMember, Locker #, Reservation, Payment, Bunk
 # Register your models here.
 
 admin.site.register(Member)
+admin.site.register(MemberApplication)
 admin.site.register(FamilyMember)
 admin.site.register(Locker)
 # admin.site.register(Bunk)

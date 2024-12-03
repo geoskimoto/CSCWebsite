@@ -28,11 +28,19 @@ STATICFILES_DIRS = [
 SECRET_KEY = 'django-insecure-6%mdb0^vyw_i5ej-(88#2+zfeqf_phc7bq_7bf8mt8)!28ip5h'
 
 # this is where you go after you login
+<<<<<<< HEAD
 LOGIN_REDIRECT_URL = 'member/dashboard'
 #Have this logIN, not logout.
 LOGOUT_REDIRECT_URL = '/login'
 
 LOGIN_URL = 'member/login/'  #
+=======
+LOGIN_REDIRECT_URL = 'dashboard'
+#Have this logIN, not logout.
+LOGOUT_REDIRECT_URL = 'login'
+
+LOGIN_URL = 'login'  #
+>>>>>>> origin/laptop
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -55,6 +63,10 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'member',
     'home',
+<<<<<<< HEAD
+=======
+    'booking'
+>>>>>>> origin/laptop
     # 'HomePage'
 ]
 
@@ -66,6 +78,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    #My middleware components:
+    'member.middleware.RedirectIfAuthenticatedMiddleware',
+
 ]
 
 ROOT_URLCONF = 'CSCWebsite.urls'
@@ -99,7 +115,11 @@ DATABASES = {
     }
 }
 
+<<<<<<< HEAD
 # AUTH_USER_MODEL = 'member.Member'
+=======
+AUTH_USER_MODEL = 'auth.User' #'member.Member'
+>>>>>>> origin/laptop
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default authentication backend
 ]
@@ -137,7 +157,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

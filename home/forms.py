@@ -3,6 +3,7 @@ from .models import MembershipApplication
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
+<<<<<<< HEAD
 class MembershipApplicationForm(forms.ModelForm):
     # def __init__(self, *args, **kwargs):
     #     super(MembershipApplicationForm, self).__init__(*args, **kwargs)
@@ -21,3 +22,5 @@ class MembershipApplicationForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
         }
+=======
+>>>>>>> origin/laptop

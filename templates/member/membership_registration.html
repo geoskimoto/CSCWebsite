@@ -7,7 +7,12 @@
 <h2>Membership Registration</h2>
 <form method="post">
     {% csrf_token %}
+<<<<<<< HEAD
     {{ form.as_p }}
+=======
+    {{ user_form.as_p }}
+    {{ member_form.as_p }}
+>>>>>>> origin/laptop
     <button type="submit">Submit</button>
 </form>
 {% endblock %}

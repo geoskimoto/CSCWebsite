@@ -1,0 +1,4 @@
+This "booking" folder/app is used to handle the models and functionality of making bunk bookings as well
+as the views that link to html templates.
+Functionality for making payments through stripe or paypal will eventually be included here also as well as
+collection of booking and financial data.
