@@ -1,5 +1,9 @@
 from django.db import models
 from django.conf import settings
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.urls import reverse
+from django.template.loader import render_to_string
 import uuid
 #going to say unresolved reference because booking app above member app, so IDE think it doesn't exist yet.  Django
 #ORM will handle it though.
@@ -47,7 +51,7 @@ class Booking(models.Model):
     check_in = models.DateField()
     check_out = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
     class Meta:
         unique_together = ('bunk', 'check_in', 'check_out')
@@ -64,7 +68,8 @@ class Booking(models.Model):
     #     total_amount = total_price #+ services_price
     #
     #     return total_amount
-
+    def __str__(self):
+        return f'Member {self.user} made a booking for bunk {self.bunk.bunk_id} from {self.check_in} to {self.check_out}'
 
 class Billing(models.Model):
     member = models.ForeignKey(Member, related_name='billing_invoices', on_delete=models.CASCADE)
@@ -107,4 +112,9 @@ class Invoice(models.Model):
             self.amount_due = self.booking.total_price
         super().save(*args, **kwargs)
         self.member.update_balance()
+
+
+def delete_session(request):
+    request.session.pop('selection_data_obj', None)
+    return redirect(request.META.get("HTTP_REFERER"))
 

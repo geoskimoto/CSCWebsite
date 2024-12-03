@@ -8,4 +8,6 @@ files in each migration folder in booking and member sub apps.  Make sure not to
 remove __init__.py files or else the models will not be recreated.
 
 If you delete entire db, will have to create superuser/members again:
-python manage.py createsuperuser --username admin --email admin@example.com
+    python manage.py createsuperuser --username admin --email admin@example.com
+Will also need to repopulate bunk_ids if you blow away the db:
+    python bunk_id_populater.py

@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import BookingForm, AvailabilityForm
 from django.views.generic import ListView, FormView
+from django.http import JsonResponse
 
 import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -24,8 +25,10 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 @login_required
 def book_bunk(request):
     if request.method == 'POST':
+        print(" POST request received.")
         form = BookingForm(request.POST)
         if form.is_valid():
+
             bunk = form.cleaned_data['bunk']
             check_in = form.cleaned_data['check_in']
             check_out = form.cleaned_data['check_out']
@@ -37,9 +40,12 @@ def book_bunk(request):
 
             try:
                 with transaction.atomic():
-                    if Booking.objects.filter(bunk=bunk.bunk_id, check_in__lt=check_out, check_out__gt=check_in).exists():
+                    # Check for conflicting bookings
+                    if Booking.objects.filter(bunk=bunk.bunk_id, check_in__lt=check_out,
+                                              check_out__gt=check_in).exists():
                         raise IntegrityError("This bunk is already booked for the selected time slot.")
 
+                    # Create the booking
                     booking = Booking.objects.create(
                         user=request.user,
                         bunk=bunk,
@@ -48,15 +54,19 @@ def book_bunk(request):
                     )
                     messages.success(request, f'Bunk {bunk.bunk_id} successfully booked.')
                     return redirect('dashboard')
-            except IntegrityError:
-                messages.error(request,
-                               'The selected bunk is already booked for the given time period. Please choose a different time or bunk.')
-    else:
+            except IntegrityError as e:
+                messages.error(request, str(e))
+            except Exception as e:  # Catch unexpected errors
+                messages.error(request, 'An unexpected error occurred. Please try again.')
+                print(f"Unexpected error: {e}")  # Log for debugging
+        else:
+            messages.error(request, "Invalid form submission. Please correct the errors.")
+
+    else:  # GET request
         form = BookingForm()
 
+
     return render(request, 'booking/book_bunk.html', {'form': form})
-
-
 
 #using session to store booking details
 # @login_required
